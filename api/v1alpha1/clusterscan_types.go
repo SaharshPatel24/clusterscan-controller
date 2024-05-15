@@ -25,17 +25,43 @@ import (
 
 // ClusterScanSpec defines the desired state of ClusterScan
 type ClusterScanSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	Deployment []DeploymentSpec `json:"deployment"`
+}
 
-	// Foo is an example field of ClusterScan. Edit clusterscan_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+type DeploymentSpec struct {
+	Name        string      `json:"name"`
+	Namespace   string      `json:"namespace"`
+	Reccuring   bool        `json:"recurring"`
+	Schedule    string      `json:"schedule,omitempty"`
+	JobTemplate JobTemplate `json:"jobTemplate"`
+}
+
+type JobTemplate struct {
+	// Containers specifies the list of containers belonging to the pod.
+	Name string `json:"name"`
+
+	// Image is the Docker image for the container.
+	Image string `json:"image"`
+
+	// Command specifies the command to run in the container.
+	Command []string `json:"command"`
+
+	// Args specifies the arguments to pass to the command.
+	Args []string `json:"args,omitempty"`
+
+	// RestartPolicy specifies the restart policy for the pod.
+	RestartPolicy string `json:"restartPolicy"`
 }
 
 // ClusterScanStatus defines the observed state of ClusterScan
 type ClusterScanStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// existing fields...
+	ToolStatuses []ToolStatus `json:"toolStatuses,omitempty"`
+}
+
+type ToolStatus struct {
+	Name   string `json:"name"`
+	Status string `json:"status"`
 }
 
 //+kubebuilder:object:root=true
