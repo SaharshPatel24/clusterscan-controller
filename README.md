@@ -1,114 +1,60 @@
-# clusterscan-sontroller
-// TODO(user): Add simple overview of use/purpose
+# Kubernetes Controller for ClusterScan Custom Resource
 
-## Description
-// TODO(user): An in-depth paragraph about your project and overview of use
+🚀 This repository contains an implementation of a basic Kubernetes controller designed to reconcile a custom resource called ClusterScan. The primary objective of this controller is to facilitate the management of arbitrary jobs within a Kubernetes cluster and record their execution results.
 
-## Getting Started
+## Tech Stack
 
-### Prerequisites
-- go version v1.21.0+
-- docker version 17.03+.
-- kubectl version v1.11.3+.
-- Access to a Kubernetes v1.11.3+ cluster.
+- **Language:** Golang
+- **Framework:** Kubebuilder
 
-### To Deploy on the cluster
-**Build and push your image to the location specified by `IMG`:**
+## Prerequisites
 
-```sh
-make docker-build docker-push IMG=<some-registry>/clusterscan-sontroller:tag
-```
+- Kubernetes Cluster 🌐
+- kubectl ⌨️
+- Golang 🐹
+- Kubebuilder 🏗️
+- Docker 🐳
 
-**NOTE:** This image ought to be published in the personal registry you specified.
-And it is required to have access to pull the image from the working environment.
-Make sure you have the proper permission to the registry if the above commands don’t work.
+## Features
 
-**Install the CRDs into the cluster:**
+**Custom Resource Definition (CRD):** Defines the structure of ClusterScan, allowing users to create instances of this resource.
 
-```sh
-make install
-```
+**Reconciliation:** The controller continuously monitors the state of ClusterScans and ensures that the desired state matches the actual state by creating Jobs and/or CronJobs as necessary.
 
-**Deploy the Manager to the cluster with the image specified by `IMG`:**
+**Support for One-off and Recurring Executions:** ClusterScans can specify either one-off executions or recurring executions using CronJobs, providing flexibility for various use cases.
 
-```sh
-make deploy IMG=<some-registry>/clusterscan-sontroller:tag
-```
+## Run Locally
 
-> **NOTE**: If you encounter RBAC errors, you may need to grant yourself cluster-admin
-privileges or be logged in as admin.
+1. **Clone the project**
 
-**Create instances of your solution**
-You can apply the samples (examples) from the config/sample:
+    ```bash
+    git clone https://github.com/SaharshPatel24/clusterscan-controller.git
+    ```
 
-```sh
-kubectl apply -k config/samples/
-```
+2. **Go to the project directory**
 
->**NOTE**: Ensure that the samples has default values to test it out.
+    ```bash
+    cd clusterscan-controller
+    ```
 
-### To Uninstall
-**Delete the instances (CRs) from the cluster:**
+3. **Install dependencies**
 
-```sh
-kubectl delete -k config/samples/
-```
+    ```bash
+    go mod tidy
+    ```
 
-**Delete the APIs(CRDs) from the cluster:**
+4. **Create Custom Resource**
+    - Create a custom resource according to the custom resource definition available [here](https://github.com/SaharshPatel24/clusterscan-controller/blob/main/config/crd/bases/api.my.domain_clusterscans.yaml)..
+    - For a sample custom resource, refer to [this file](https://github.com/SaharshPatel24/clusterscan-controller/blob/main/config/samples/api_v1alpha1_clusterscan.yaml).
 
-```sh
-make uninstall
-```
+5. **Run the Controller**
+    ```bash
+    make run
+    ```
 
-**UnDeploy the controller from the cluster:**
+6. **Apply Custom Resource**
 
-```sh
-make undeploy
-```
-
-## Project Distribution
-
-Following are the steps to build the installer and distribute this project to users.
-
-1. Build the installer for the image built and published in the registry:
-
-```sh
-make build-installer IMG=<some-registry>/clusterscan-sontroller:tag
-```
-
-NOTE: The makefile target mentioned above generates an 'install.yaml'
-file in the dist directory. This file contains all the resources built
-with Kustomize, which are necessary to install this project without
-its dependencies.
-
-2. Using the installer
-
-Users can just run kubectl apply -f <URL for YAML BUNDLE> to install the project, i.e.:
-
-```sh
-kubectl apply -f https://raw.githubusercontent.com/<org>/clusterscan-sontroller/<tag or branch>/dist/install.yaml
-```
-
-## Contributing
-// TODO(user): Add detailed information on how you would like others to contribute to this project
-
-**NOTE:** Run `make help` for more information on all potential `make` targets
-
-More information can be found via the [Kubebuilder Documentation](https://book.kubebuilder.io/introduction.html)
-
-## License
-
-Copyright 2024.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
+    In a second terminal, apply the custom resource to the controller using 
+    ```bash
+    kubectl apply -f /path/to/custom-resource
+    ```
