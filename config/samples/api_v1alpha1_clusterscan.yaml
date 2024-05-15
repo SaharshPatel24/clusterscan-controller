@@ -10,7 +10,7 @@ spec:
   - name: terrascan
     namespace: default
     recurring: true
-    schedule: "*/3 * * * *"
+    schedule: "*/1 * * * *"
     jobTemplate:
       name: terrascan
       image: "tenable/terrascan"

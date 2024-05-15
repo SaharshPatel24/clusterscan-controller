@@ -42,17 +42,22 @@
     ```bash
     go mod tidy
     ```
+4. **Run Kubernetes cluster locally**
 
-4. **Create Custom Resource**
+    ```bash
+    minikube start
+    ```
+
+5. **Create Custom Resource**
     - Create a custom resource according to the custom resource definition available [here](https://github.com/SaharshPatel24/clusterscan-controller/blob/main/config/crd/bases/api.my.domain_clusterscans.yaml)..
     - For a sample custom resource, refer to [this file](https://github.com/SaharshPatel24/clusterscan-controller/blob/main/config/samples/api_v1alpha1_clusterscan.yaml).
 
-5. **Run the Controller**
+6. **Run the Controller**
     ```bash
     make run
     ```
 
-6. **Apply Custom Resource**
+7. **Apply Custom Resource**
 
     In a second terminal, apply the custom resource to the controller using 
     ```bash
